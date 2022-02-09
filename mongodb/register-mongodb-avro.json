@@ -1,0 +1,18 @@
+{
+  "name": "inventory-connector-mongo-avro-2",
+  "config": {
+    "connector.class" : "io.debezium.connector.mongodb.MongoDbConnector",
+    "tasks.max" : "1",
+    "mongodb.hosts" : "rs0/mongodb:27017",
+    "mongodb.name" : "dbserver6",
+    "mongodb.user" : "debezium",
+    "mongodb.password" : "dbz",
+    "database.include.list" : "inventory",
+    "database.history.kafka.bootstrap.servers" : "kafka:9092",
+    "database.history.kafka.topic": "schema-changes.devmysql",
+    "key.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "key.converter.schema.registry.url": "http://schema-registry:8081",
+    "value.converter.schema.registry.url": "http://schema-registry:8081"
+  }
+}

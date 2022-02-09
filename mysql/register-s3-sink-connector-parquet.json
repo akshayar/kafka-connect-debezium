@@ -1,0 +1,29 @@
+{
+    "name": "rdsmysql-s3-sink-connector",
+    "config": {
+    "connector.class": "io.confluent.connect.s3.S3SinkConnector",
+    "tasks.max": 1,
+    "topics.regex": "rdsmysql.dev.artists",
+    "table.name.format": "${topic}",
+    "s3.region": "ap-south-1",
+    "s3.bucket.name": "akshaya-hudi-experiments",
+    "s3.part.size": 5242880,
+    "flush.size": 10000,
+    "rotate.schedule.interval.ms": 60000,
+    "timezone": "UTC",
+    "storage.class": "io.confluent.connect.s3.storage.S3Storage",
+    "format.class": "io.confluent.connect.s3.format.parquet.ParquetFormat",
+    "schema.generator.class": "io.confluent.connect.storage.hive.schema.DefaultSchemaGenerator",
+    "partitioner.class": "io.confluent.connect.storage.partitioner.DefaultPartitioner",
+    "schema.compatibility": "NONE",
+    "behavior.on.null.values": "ignore",
+    "key.converter": "io.confluent.connect.avro.AvroConverter",
+    "key.converter.schema.registry.url": "http://schema-registry:8081",
+    "key.converter.schema.registry.auto-register": "true",
+    "key.converter.schema.registry.find-latest": "true",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "http://schema-registry:8081",
+    "value.converter.schema.registry.auto-register": "true",
+    "value.converter.schema.registry.find-latest": "true"
+}
+}
