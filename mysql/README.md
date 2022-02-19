@@ -13,6 +13,7 @@ GRANT REPLICATION SLAVE, SELECT, RELOAD, REPLICATION CLIENT,
        
 call mysql.rds_set_configuration('binlog retention hours', 168);
 ```
+4. Create schema in the DB with [schema.sql](./schema.sql)
 ## CDC as Json Data
 1. Bring up Kakfa and Kafka Connect
 ```shell
