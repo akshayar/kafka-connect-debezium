@@ -15,7 +15,7 @@ call mysql.rds_set_configuration('binlog retention hours', 168);
 ```
 4. Create schema in the DB with [schema.sql](./schema.sql)
 ## CDC as Json Data
-1. Bring up Kakfa and Kafka Connect
+1. Bring up Kakfa and Kafka Connect by executing the commands below on a Cloud9 IDE or EC2. Ensure that Cloud9/EC2 can connect to the DB. 
 ```shell
 export DEBEZIUM_VERSION=1.8
 docker-compose -f docker-compose-mysql.yaml up
