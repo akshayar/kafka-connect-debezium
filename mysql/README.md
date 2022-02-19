@@ -37,12 +37,14 @@ docker-compose -f docker-compose-mysql.yaml up
 ```
 3. Start MySQL connector. Before that command modify [register-mysql.json](./register-mysql.json) and update database.hostname, database.user etc. 
 ```shell
+cd kafka-connect-debezium/mysql
 curl -X DELETE http://localhost:8083/connectors/rdsmysql-connector
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-mysql.json
 curl -X GET http://localhost:8083/connectors/rdsmysql-connector/status
 ```
 4. Consume messages from a Debezium topic
 ```shell
+cd kafka-connect-debezium/mysql
 docker-compose -f docker-compose-mysql.yaml exec kafka /kafka/bin/kafka-console-consumer.sh \
    --bootstrap-server kafka:9092 \
    --from-beginning \
@@ -52,6 +54,7 @@ docker-compose -f docker-compose-mysql.yaml exec kafka /kafka/bin/kafka-console-
 5. Modify records in the database via MySQL client
 6. Shut down the cluster
 ```shell
+cd kafka-connect-debezium/mysql
 docker-compose -f docker-compose-mysql.yaml down
 ``` 
 
@@ -65,6 +68,7 @@ docker-compose -f docker-compose-mysql-avro-connector.yaml up --build
 2. Ensure that the EC2 instance on which the container runs has permission to write to the S3 bucket
 3. Start MySQL source connector and S3 sink connector. Before that command modify [register-mysql-avro.json](./register-mysql-avro.json) and update database.hostname, database.user etc.
 ```shell
+cd kafka-connect-debezium/mysql
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-mysql-avro.json
 ## For Parquet Sink data
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-s3-sink-connector-parquet.json
@@ -79,6 +83,7 @@ curl -s -X GET http://localhost:8083/connectors/rdsmysql-s3-sink-connector-avro/
 ```
 4. Consume messages from a Debezium topic
 ```shell
+cd kafka-connect-debezium/mysql
 docker-compose -f docker-compose-mysql-avro-connector.yaml exec schema-registry /usr/bin/kafka-avro-console-consumer \
     --bootstrap-server kafka:9092 \
     --from-beginning \
@@ -100,6 +105,7 @@ curl -X DELETE http://localhost:8083/connectors/rdsmysql-s3-sink-connector-parqu
 curl -X DELETE http://localhost:8083/connectors/rdsmysql-s3-sink-connector-avro
 curl -X DELETE http://localhost:8083/connectors/rdsmysql-dev-connector-avro
 ## Shut down cluster
+cd kafka-connect-debezium/mysql
 docker-compose -f docker-compose-mysql-avro-connector.yaml down
 ``` 
 ## CDC as Avro Data , Apicurio schema registry and S3 Sink Connector
@@ -110,8 +116,9 @@ export DEBEZIUM_VERSION=1.8
 docker-compose -f docker-compose-mysql-apicurio.yaml up --build
 ```
 2. Ensure that the EC2 instance on which the container runs has permission to write to the S3 bucket
-3. Start MySQL connector
+3. Start MySQL connector.  Before that command modify [register-mysql-apicurio.json](./register-mysql-apicurio.json) and update database.hostname, database.user etc.
 ```shell
+cd kafka-connect-debezium/mysql
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-mysql-apicurio.json
 # For Parquet Sink Data
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-s3-sink-connector-apicurio-parquet.json 
@@ -125,6 +132,7 @@ curl -X GET http://localhost:8083/connectors/rdsmysql-s3-sink-connector-apicurio
 ```
 4. Consume messages from a Debezium topic
 ```shell
+cd kafka-connect-debezium/mysql
 docker-compose -f docker-compose-mysql-apicurio.yaml exec kafka /kafka/bin/kafka-console-consumer.sh \
     --bootstrap-server kafka:9092 \
     --from-beginning \
@@ -147,5 +155,6 @@ curl -X DELETE http://localhost:8083/connectors/rdsmysql-dev-connector-apicurio-
 curl -X DELETE http://localhost:8083/connectors/rdsmysql-s3-sink-connector-apicurio-parquet
 curl -X DELETE http://localhost:8083/connectors/rdsmysql-s3-sink-connector-apicurio-avro
 ## Shut down cluster
+cd kafka-connect-debezium/mysql
 docker-compose -f docker-compose-mysql-apicurio.yaml down
 ``` 
