@@ -1,10 +1,10 @@
 {
-    "name": "rdsmysql-s3-sink-connector-apicurio",
+    "name": "rdsmysql-s3-sink-connector-apicurio-avro",
     "config": {
     "connector.class": "io.confluent.connect.s3.S3SinkConnector",
     "tasks.max": 1,
-    "topics.regex": "rdsmysqlapicurio.dev.artists",
-    "table.name.format": "${topic}",
+    "topics.regex": "rdsmysql-apicurio.devmysql.artists",
+    "topics.dir": "debezium/sink/apicurio-avro/rdsmysql",
     "s3.region": "ap-south-1",
     "s3.bucket.name": "akshaya-hudi-experiments",
     "s3.part.size": 5242880,
