@@ -1,0 +1,15 @@
+version: '2'
+services:
+  connect:
+    image: debezium/connect:${DEBEZIUM_VERSION}
+    ports:
+      - 8083:8083
+    environment:
+      - BOOTSTRAP_SERVERS=b-1.mskclustermskconnectl.kor5wp.c23.kafka.us-east-1.amazonaws.com:9092,b-3.mskclustermskconnectl.kor5wp.c23.kafka.us-east-1.amazonaws.com:9092,b-2.mskclustermskconnectl.kor5wp.c23.kafka.us-east-1.amazonaws.com:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=new_connect_configs2
+      - CONFIG_STORAGE_TOPIC_REPLICATION_FACTOR=3
+      - OFFSET_STORAGE_TOPIC=new_connect_offsets2
+      - OFFSET_STORAGE_TOPIC_REPLICATION_FACTOR=3
+      - STATUS_STORAGE_TOPIC=new_connect_statuses2
+      - STATUS_STORAGE_TOPIC_REPLICATION_FACTOR=3

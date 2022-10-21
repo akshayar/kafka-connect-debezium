@@ -1,0 +1,15 @@
+{
+  "name": "inventory-connector-pg",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+    "database.hostname": "pgdb.cvlje0mdpuqc.us-east-1.rds.amazonaws.com",
+    "database.port": "5432",
+    "database.user": "pgadmin",
+    "database.password": "Admin123",
+    "database.dbname" : "mydb",
+    "topic.prefix": "pgdev",
+    "schema.include.list": "dev",
+    "plugin.name": "pgoutput"
+  }
+}

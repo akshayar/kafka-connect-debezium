@@ -1,0 +1,122 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Description": "AWS CloudFormation Sample Template for creating an Amazon RDS DB instance:
+  Sample template showing how to create a DB instance with Enhanced Monitoring enabled.
+  **WARNING** This template creates an RDS DB instance. You will be billed for the AWS
+  resources used if you create a stack from this template.
+Parameters:
+  DBInstanceID:
+    Default: pgdb
+    Description: My database instance
+    Type: String
+    MinLength: '1'
+    MaxLength: '63'
+    AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
+    ConstraintDescription: >-
+      Must begin with a letter and must not end with a hyphen or contain two
+      consecutive hyphens.
+  DBName:
+    Default: mydb
+    Description: My database
+    Type: String
+    MinLength: '1'
+    MaxLength: '64'
+    AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
+    ConstraintDescription: Must begin with a letter and contain only alphanumeric characters.
+  DBInstanceClass:
+    Default: db.t2.2xlarge
+    Description: DB instance class
+    Type: String
+    ConstraintDescription: Must select a valid DB instance type.
+  DBAllocatedStorage:
+    Default: '500'
+    Description: The size of the database (GiB)
+    Type: Number
+    MinValue: '20'
+    MaxValue: '65536'
+    ConstraintDescription: must be between 20 and 65536 GiB.
+  DBUsername:
+    NoEcho: 'true'
+    Description: Username for MySQL database access
+    Type: String
+    MinLength: '1'
+    MaxLength: '16'
+    AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
+    ConstraintDescription: must begin with a letter and contain only alphanumeric characters.
+  DBPassword:
+    NoEcho: 'true'
+    Description: Password MySQL database access
+    Type: String
+    MinLength: '8'
+    MaxLength: '41'
+    AllowedPattern: '[a-zA-Z0-9]*'
+    ConstraintDescription: must contain only alphanumeric characters.
+  RDSSubNet1:
+    Description: Subnet ID 1
+    Type: AWS::EC2::Subnet::Id
+  RDSSubNet2:
+    Description: Subnet ID 2
+    Type: AWS::EC2::Subnet::Id
+  VPCID:
+    Description: VPC ID
+    Type: AWS::EC2::VPC::Id
+Resources:
+  RDSDMSLabDB:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AllocatedStorage: !Ref DBAllocatedStorage
+      AllowMajorVersionUpgrade: false
+      AutoMinorVersionUpgrade: true
+      DBInstanceClass: !Ref DBInstanceClass
+      DBInstanceIdentifier: !Ref DBInstanceID
+      Port: '5432'
+      PubliclyAccessible: true
+      StorageType: gp2
+      BackupRetentionPeriod: 7
+      MasterUsername: !Ref DBUsername
+      MasterUserPassword: !Ref DBPassword
+      PreferredBackupWindow: 04:00-04:30
+      PreferredMaintenanceWindow: sun:05:20-sun:05:50
+      DBName: !Ref DBName
+      Engine: postgres
+      EngineVersion: '11.14'
+      LicenseModel: postgresql-license
+      DBSubnetGroupName: !Ref DMSLabDefaultDBSubnet
+      DBParameterGroupName: !Ref DMSLabDBPG
+      VPCSecurityGroups:
+        - !Ref DMSLabDBSG
+      Tags:
+        -
+          Key: workload-type
+          Value: other
+  DMSLabDefaultDBSubnet:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Created from the RDS Management Console
+      SubnetIds:
+        - !Ref RDSSubNet1
+        - !Ref RDSSubNet2
+  DMSLabDBPG:
+    Type: AWS::RDS::DBParameterGroup
+    Properties:
+      Description: Parameter for Ticket RedshiftDatabaseName
+      Family: postgres11
+      Parameters:
+        rds.logical_replication: '1'
+        wal_sender_timeout: '0'
+        max_wal_senders: '20'
+        max_replication_slots: '50'
+  DMSLabSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: EC2 Security GroupInternetRoute
+      VpcId: !Ref VPCID
+  DMSLabDBSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: RDS Security Group
+      VpcId: !Ref VPCID
+      Tags:
+        -
+          Key: Name
+          Value: DMSLabRDS-SG

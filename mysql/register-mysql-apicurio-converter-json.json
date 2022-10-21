@@ -1,0 +1,24 @@
+{
+    "name": "inventory-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+        "tasks.max": "1",
+         "database.hostname": "mask-lab-salesdb.cvlje0mdpuqc.us-east-1.rds.amazonaws.com",
+        "database.port": "3306",
+        "database.user": "master",
+        "database.password": "Admin123",
+        "database.server.id": "1840542",
+        "database.server.name": "regjson",
+        "database.include.list": "test",
+        "database.history.kafka.bootstrap.servers": "b-1.mskclustermskconnectl.kor5wp.c23.kafka.us-east-1.amazonaws.com:9092,b-2.mskclustermskconnectl.kor5wp.c23.kafka.us-east-1.amazonaws.com:9092,b-3.mskclustermskconnectl.kor5wp.c23.kafka.us-east-1.amazonaws.com:9092",
+        "database.history.kafka.topic": "schema-changes-regjson.test",
+        "key.converter": "io.apicurio.registry.utils.converter.ExtJsonConverter",
+        "key.converter.apicurio.registry.url": "http://apicurio:8080/apis/registry/v2",
+        "key.converter.apicurio.registry.auto-register": "true",
+        "key.converter.apicurio.registry.find-latest": "true",
+        "value.converter": "io.apicurio.registry.utils.converter.ExtJsonConverter",
+        "value.converter.apicurio.registry.url": "http://apicurio:8080/apis/registry/v2",
+        "value.converter.apicurio.registry.auto-register": "true",
+        "value.converter.apicurio.registry.find-latest": "true"
+    }
+}
