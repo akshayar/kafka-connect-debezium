@@ -45,4 +45,66 @@ curl -i -X POST -H "Accept:application/json"     -H  "Content-Type:application/j
 }
 
 ["inventory-connector-pg-dr3",{"server":"pgdevdr2"}]
+
+["inventory-connector-pg-dr3",{"server":"pgdevdr2"}] 	
+{
+  "transaction_id": null,
+  "lsn_proc": 65364052864,
+  "lsn_commit": 65364052808,
+  "lsn": 65364052864,
+  "txId": 1735,
+  "ts_usec": 1666345651445283
+}
+
+["inventory-connector-pg-dr4",{"server":"pgdevdr2"}] 	
+{
+  "transaction_id": null,
+  "lsn_proc": 65364052864,
+  "lsn_commit": 65364052808,
+  "lsn": 65364052864,
+  "txId": 1735,
+  "ts_usec": 1666345651445283
+}
+
+["inventory-connector-pg-dr4",{"server":"pgdevdr2"}]
+{
+  "transaction_id": null,
+  "lsn_proc": 65431153824,
+  "lsn_commit": 65431153768,
+  "lsn": 65431153824,
+  "txId": 1745,
+  "ts_usec": 1666346001605705
+}
+
+["inventory-connector-pg-dr5",{"server":"pgdevdr2"}]
+{
+  "transaction_id": null,
+  "lsn_proc": 65431153824,
+  "lsn_commit": 65431153768,
+  "lsn": 65431153824,
+  "txId": 1745,
+  "ts_usec": 1666346001605705
+}
+
+
+["inventory-connector-pg-dr4",{"server":"pgdevdr2"}]
+{
+  "transaction_id": null,
+  "lsn_proc": 65565373160,
+  "lsn_commit": 65565370848,
+  "lsn": 65565373160,
+  "txId": 1764,
+  "ts_usec": 1666346464663614
+}
+
+
+["inventory-connector-pg-dr5",{"server":"pgdevdr2"}]
+{
+  "transaction_id": null,
+  "lsn_proc": 65565373160,
+  "lsn_commit": 65565370848,
+  "lsn": 65565373160,
+  "txId": 1764,
+  "ts_usec": 1666346464663614
+}
 ```
